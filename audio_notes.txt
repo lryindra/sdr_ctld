@@ -1,0 +1,49 @@
+Notes on Audio:
+Ubuntu ships with with PulseAudio by default.
+WSJT-X and the WSPR protocol use the System time to find messages bellow the
+noise floor.  System time must be accurate (with in 1 second, i think) in order for WSPR to work.  One way to check your system time is the website
+https://time.is/ But Ubuntu will run Network Time Protocol (NTP) when it
+boots.
+
+With both WSJT-X and JS8Call and sdr_ctld all sending audio through
+PulseAudio, I was seeing 3 seconds of audio delay on which ever (WSJT-X or
+JS8Call) application I opened second.  
+
+First I created loopback by adding 
+    sudo modprobe snd-aloop pcm_substreams=2
+to a script that gets called when the system boots.  This creates Loopback.
+
+I changed the .asoundrc to the following (at end of this document) and then I changed sdr_ctld to use default audio (ALSA) 
+
+This appears to fix the audio delay.  
+----------------------------------------------------------------------------
+add the following to .asoundrc
+----------------------------------------------------------------------------
+
+# playback PCM device 
+pcm.amix {
+  type dmix
+  ipc_key 1234
+  slave.pcm "hw:Loopback,0,0"
+}
+# capture PCM device
+pcm.asnoop {
+  type dsnoop
+  ipc_key 1235
+  slave.pcm "hw:Loopback,0,1"
+}
+# duplex devcie combinding asnoop and amix
+pcm.aduplex {
+  type asym
+  playback.pcm "amix"
+  capture.pcm "asnoop"
+  hint {
+    show on
+    description "combines loopback asnoop(input) and amix(output)"
+  }
+}
+pcm.!default {
+  type plug
+  slave.pcm "aduplex"
+}
+

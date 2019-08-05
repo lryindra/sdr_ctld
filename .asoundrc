@@ -1,0 +1,27 @@
+# playback PCM device 
+pcm.amix {
+  type dmix
+  ipc_key 1234
+  slave.pcm "hw:Loopback,0,0"
+}
+# capture PCM device
+pcm.asnoop {
+  type dsnoop
+  ipc_key 1235
+  slave.pcm "hw:Loopback,0,1"
+}
+# duplex devcie combinding asnoop and amix
+pcm.aduplex {
+  type asym
+  playback.pcm "amix"
+  capture.pcm "asnoop"
+  hint {
+    show on
+    description "combines loopback asnoop(input) and amix(output)"
+  }
+}
+pcm.!default {
+  type plug
+  slave.pcm "aduplex"
+}
+

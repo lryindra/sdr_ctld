@@ -1,0 +1,21 @@
+#######################################################################################################################
+# Add the source files to SRCS_LIST
+add_source_files(SRCS_LIST
+    command_msg.cpp
+    command_msg.h
+    flow_chart.cpp
+    flow_chart.h
+    logger.cpp
+    logger.h
+    message_queue.cpp
+    message_queue.h
+    message_server.cpp
+    message_server.h
+    radio_config.cpp
+    radio_config.h
+    tcp_server.cpp
+    tcp_server.h
+    utility.cpp
+    utility.h
+    main.cpp
+)

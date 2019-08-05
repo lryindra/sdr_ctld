@@ -1,0 +1,31 @@
+INCLUDE(FindPkgConfig)
+PKG_CHECK_MODULES(PC_LIMESUITE LimeSuite)
+
+FIND_PATH(
+    LIMESUITE_INCLUDE_DIRS
+    NAMES LimeSuite.h
+    HINTS $ENV{LIMESUITE_DIR}/include
+        ${PC_LIMESUITE_INCLUDEDIR}/lime
+        ${CMAKE_INSTALL_PREFIX}/include/lime
+    PATHS ${LIMESUITE_PKG_INCLUDE_DIRS}
+        /usr/local/include/limesdr
+        /usr/include/limsdr
+)
+
+FIND_LIBRARY(
+    LIMESUITE_LIBRARIES
+    NAMES LimeSuite limesuite
+    HINTS $ENV{LIMESUITE_DIR}/lib
+        ${PC_LIMESUITE_LIBDIR}
+        ${CMAKE_INSTALL_PREFIX}/lib
+        ${CMAKE_INSTALL_PREFIX}/lib64
+        PATHS ${LIMESDR_PKG_LIBRARY_DIRS}
+          /usr/local/lib
+          /usr/local/lib64
+          /usr/lib
+          /usr/lib64
+)
+
+INCLUDE(FindPackageHandleStandardArgs)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(LIMESUITE DEFAULT_MSG LIMESUITE_LIBRARIES LIMESUITE_INCLUDE_DIRS)
+MARK_AS_ADVANCED(LIMESUITE_LIBRARIES LIMESUITE_INCLUDE_DIRS)

@@ -1,0 +1,29 @@
+INCLUDE(FindPkgConfig)
+PKG_CHECK_MODULES(PC_GNURADIO_LIMESDR gnuradio-limesdr)
+
+FIND_PATH(
+    GNURADIO_LIMESDR_INCLUDE_DIRS
+    NAMES limesdr/source.h
+    HINTS $ENV{PYBOMBS_PREFIX}/include
+        ${PC_GNURADIO_LIMESDR_INCLUDEDIR}
+        ${CMAKE_INSTALL_PREFIX}/include
+    PATHS /usr/local/include/limesdr
+          /usr/include/limsdr
+)
+
+FIND_LIBRARY(
+    GNURADIO_LIMESDR_LIBRARIES
+    NAMES gnuradio-limesdr
+    HINTS $ENV{PYBOMBS_PREFIX}/lib
+        ${PC_GNURADIO_LIMESDR_LIBDIR}
+        ${CMAKE_INSTALL_PREFIX}/lib
+        ${CMAKE_INSTALL_PREFIX}/lib64
+    PATHS /usr/local/lib
+          /usr/local/lib64
+          /usr/lib
+          /usr/lib64
+)
+
+INCLUDE(FindPackageHandleStandardArgs)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(GNURADIO_LIMESDR DEFAULT_MSG GNURADIO_LIMESDR_LIBRARIES GNURADIO_LIMESDR_INCLUDE_DIRS)
+MARK_AS_ADVANCED(GNURADIO_LIMESDR_LIBRARIES GNURADIO_LIMESDR_INCLUDE_DIRS)
