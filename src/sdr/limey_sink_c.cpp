@@ -48,7 +48,7 @@ Limey_Sink_c::Limey_Sink_c( std::string serial, double freq, double input_rate, 
           gr::io_signature::make(0, 0, 0)),// output_signatur
     m_min_freq(min_freq)
 {
-    int pa_path_mini = 1;// None(0), BAND1(1), BAND(2), NONE(3), AUTO(255)
+    int pa_path_mini = 255;// None(0), BAND1(1), BAND(2), NONE(3), AUTO(255)
     m_chan = 0;// LMS_CH_0
 
     m_limey_c_sptr= gr::limesdr::sink::make(
