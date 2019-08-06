@@ -22,32 +22,32 @@ C++ Dependencies
 
 This is a CMake project
 to build:
-    mkdir build && cd build
-    cmake ..
-    make
+    - mkdir build && cd build
+    - cmake ..
+    - make
 
 copy over the .asoundrc in this folder to ~ (/home/user)
-    See audio_notes.txt for more info
+    - See audio_notes.txt for more info
 
 Create a audio Loopback device. (I add this to the system boot scripts)
-    sudo modprobe snd-aloop pcm_substreams=2
+    - sudo modprobe snd-aloop pcm_substreams=2
 
 to execute:
-    cd build
-    ./src/sdr_ctld
+    - cd build
+    - ./src/sdr_ctld
 
 After the server is started it should print out "Type q [return] to exit." this means that you can now start WSJT-X.  In WSJT-X, go to File -> Settings... -> Radio and change the following:
-    Rig: Hamlib NET rigctl
-    Network Server: 127.0.0.1:4532
-    PTT Method: CAT
-    Transmit Audio Source: Front/Mic
-    Mode: None
-    Split Operation: None
+    - Rig: Hamlib NET rigctl
+    - Network Server: 127.0.0.1:4532
+    - PTT Method: CAT
+    - Transmit Audio Source: Front/Mic
+    - Mode: None
+    - Split Operation: None
 
 The transmit/receive data is sent through ALSA by default. There are command line options to select something other than default.
 
 Use these Soundcard settings in WSJT-S and JS8Call:
-    Input: alsa_output.platform-snd_aloop.0.analog-mono.monitor
-    Output: alsa_output.platform-snd_aloop.0.analog-mono
+    - Input: alsa_output.platform-snd_aloop.0.analog-mono.monitor
+    - Output: alsa_output.platform-snd_aloop.0.analog-mono
 
 This software appears as "ALSA plug-in [sdr_ctld]" on Playback and Recording tabs of pavucontrol.
